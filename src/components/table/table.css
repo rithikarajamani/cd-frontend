@@ -1,0 +1,13 @@
+.header{
+    display: flex;
+}
+
+/* Replace default sort icon with custom icon */
+.p-datatable-customers .p-column-header-content span:nth-child(2) svg {
+    fill: none; 
+    background-image: url('../../../assets/sorting.svg');
+    background-repeat: no-repeat; 
+    background-size: center; 
+    padding-left: 20px; 
+    padding-top: 24px;
+}
