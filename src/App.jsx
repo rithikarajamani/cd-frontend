@@ -1,21 +1,18 @@
 import React from "react";
 import "./App.css";
-
 import Table from "./components/table/table";
 import { FontProvider } from "./components/fonts/fontContext";
-import Header from "./components/header/header";
+import Login from "./components/login/login";
+
 function App() {
   return (
     <>
       <FontProvider>
         <div className="App">
-          <Header/>
-          <Table />
+          <Login></Login>
+          {/* <Table /> */}
         </div>
       </FontProvider>
-      {/* <div style={{ fontFamily: 'Poppins' }}>
-        
-        </div> */}
     </>
   );
 }

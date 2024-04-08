@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -9,9 +9,13 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { useFont } from "../fonts/fontContext";
 import "./table.css";
+import FilterButton from "../filter/filterButton";
+import AddNew from "../addNew/addNew";
+import Clients from "../clients/client";
 
 function Table() {
   const fontStyles = useFont();
+  const [activeRowId, setActiveRowId] = useState(null); // State to track active row ID
   const [filters, setFilters] = useState({
     global: {
       value: "",
@@ -23,72 +27,72 @@ function Table() {
     {
       id: 1,
       client: "john",
-      company: "ATS",
+      company: "wild",
       designation: "BA",
-      contact: 6369912399,
+      contact: 6369912392,
       email: "john@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "23 April 2024",
+      clientReply: "27 May 2024",
+      followUp: "7 june 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "2 July 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "2",
       actions: "",
     },
     {
       id: 2,
       client: "shelly",
-      company: "ATS",
+      company: "Aniyam",
       designation: "Devloper",
-      contact: 6369912399,
+      contact: 9369992399,
       email: "shelly@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
+      emailSent: "7 Mar 2024",
+      clientReply: "12 Mar 2024",
       followUp: "27 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "2 April 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "3",
       actions: "",
     },
     {
       id: 3,
       client: "murphy",
-      company: 25,
+      company: "ATS",
       designation: "Tester",
-      contact: 6369912399,
+      contact: 8369912399,
       email: "murphy@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "12 Mar 2024",
+      clientReply: "20 Mar 2024",
+      followUp: "30 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "12 April 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "3",
       actions: "",
     },
     {
       id: 4,
       client: "cecee",
-      company: "ATS",
+      company: "SITAARC",
       designation: "Designer",
-      contact: 6369912399,
+      contact: 7369912399,
       email: "cecee@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "1 April 2024",
+      clientReply: "27 April 2024",
+      followUp: "2 May 2024",
       status: "INACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "17 May 2024",
       enquiry: "YES",
       proposal: "NO",
-      remarks: "eye",
+      remarks: "",
       key: "4",
       actions: "",
     },
@@ -99,86 +103,86 @@ function Table() {
       designation: "Lead",
       contact: 6369912399,
       email: "mary@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
+      emailSent: "7 Mar 2024",
+      clientReply: "17 Mar 2024",
       followUp: "27 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "1 April 2024",
       enquiry: "NO",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "5",
       actions: "",
     },
     {
       id: 6,
       client: "memaw",
-      company: "ATS",
+      company: "CS",
       designation: "DDO",
-      contact: 6369912399,
+      contact: 9347912399,
       email: "memaw@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "2 April 2024",
+      clientReply: "7 April 2024",
+      followUp: "2 May 2024",
       status: "INACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "27 May 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "6",
       actions: "",
     },
     {
       id: 7,
       client: "George",
-      company: "ATS",
+      company: "HUB",
       designation: "CTO",
-      contact: 6369912399,
+      contact: 7369912399,
       email: "george@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "5 Mar 2024",
+      clientReply: "15 Mar 2024",
+      followUp: "25 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "9 April 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "7",
       actions: "",
     },
     {
       id: 8,
       client: "Missy",
-      company: "ATS",
+      company: "FUJI",
       designation: "CEO",
-      contact: 6369912399,
+      contact: 9369912399,
       email: "missy@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "13 Mar 2024",
+      clientReply: "28 Mar 2024",
+      followUp: "16 April 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "21 April 2024",
       enquiry: "YES",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "8",
       actions: "",
     },
     {
       id: 9,
       client: "Sushi",
-      company: "ATS",
+      company: "ESIM",
       designation: "GM",
-      contact: 6369912399,
+      contact: 9876543212,
       email: "sushi@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
+      emailSent: "14 Mar 2024",
+      clientReply: "23 Mar 2024",
       followUp: "27 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "17 April 2024",
       enquiry: "NO",
       proposal: "YES",
-      remarks: "eye",
+      remarks: "",
       key: "9",
       actions: "",
     },
@@ -189,14 +193,14 @@ function Table() {
       designation: "PM",
       contact: 6369912399,
       email: "shubh@gmail.com",
-      emailSent: "27 Mar 2024",
-      clientReply: "27 Mar 2024",
-      followUp: "27 Mar 2024",
+      emailSent: "19 Mar 2024",
+      clientReply: "29 Mar 2024",
+      followUp: "30 Mar 2024",
       status: "ACTIVE",
-      meetingHeld: "27 Mar 2024",
+      meetingHeld: "1 April 2024",
       enquiry: "YES",
       proposal: "NO",
-      remarks: "eye",
+      remarks: "",
       key: "10",
       actions: "",
     },
@@ -251,81 +255,148 @@ function Table() {
     { label: "No", value: "No" },
   ];
 
-  const onStatusChange = (rowData, e) => {
-    const updatedData = [...data];
-    const index = updatedData.findIndex((item) => item.id === rowData.id);
-    if (index !== -1) {
-      updatedData[index].status = e.value;
-      setData(updatedData);
-    }
+  // const onStatusChange = (rowData, e) => {
+  //   const updatedData = [...data];
+  //   const index = updatedData.findIndex((item) => item.id === rowData.id);
+  //   if (index !== -1) {
+  //     updatedData[index].status = e.value;
+  //     setData(updatedData);
+  //   }
+  // };
+  // //for dropdown in enquiry field
+  // const onEnquiryChange = (rowData, e) => {
+  //   const enquiryUpdatedData = [...data];
+  //   const index = enquiryUpdatedData.findIndex(
+  //     (item) => item.id === rowData.id
+  //   );
+  //   if (index !== -1) {
+  //     enquiryUpdatedData[index].enquiry = e.value;
+  //     setData(enquiryUpdatedData);
+  //   }
+  // };
+  // const onProposalChange = (rowData, e) => {
+  //   const proposalUpdatedData = [...data];
+  //   const index = proposalUpdatedData.findIndex(
+  //     (item) => item.id === rowData.id
+  //   );
+  //   if (index !== -1) {
+  //     proposalUpdatedData[index].proposal = e.value;
+  //     setData(proposalUpdatedData);
+  //   }
+  // };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        activeRowId !== null &&
+        event.target.closest(".action-img") === null
+      ) {
+        setActiveRowId(null);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [activeRowId]);
+
+  const handleImageClick = (rowId) => {
+    setActiveRowId(rowId === activeRowId ? null : rowId);
   };
-  const onEnquiryChange = (rowData, e) => {
-    const enquiryUpdatedData = [...data];
-    const index = enquiryUpdatedData.findIndex(
-      (item) => item.id === rowData.id
-    );
-    if (index !== -1) {
-      enquiryUpdatedData[index].enquiry = e.value;
-      setData(enquiryUpdatedData);
-    }
-  };
-  const onProposalChange = (rowData, e) => {
-    const proposalUpdatedData = [...data];
-    const index = proposalUpdatedData.findIndex(
-      (item) => item.id === rowData.id
-    );
-    if (index !== -1) {
-      proposalUpdatedData[index].proposal = e.value;
-      setData(proposalUpdatedData);
-    }
+
+  const handleEditButtonClick = (event) => {
+    event.stopPropagation();
   };
 
   return (
     <div style={fontStyles}>
       {/* <h1>Clients</h1> */}
-      <span className="p-input-icon-left">
-        <i className="fa fa-search"></i>
-        <InputText
-          placeholder="Search"
-          value={filters.global.value}
-          onChange={(e) =>
-            setFilters({
-              global: {
-                value: e.target.value,
-                matchMode: FilterMatchMode.CONTAINS,
-              },
-            })
-          }
-        />
-      </span>
+      {/* <span className="p-input-icon-left">
+        <i className="fa fa-search"></i> */}
+      <div className="header">
+        <div className="client-content">
+          <Clients />
+        </div>
+        <div className="search">
+          <InputText
+            style={fontStyles}
+            placeholder="Search"
+            value={filters.global.value}
+            onChange={(e) =>
+              setFilters({
+                global: {
+                  value: e.target.value,
+                  matchMode: FilterMatchMode.CONTAINS,
+                },
+              })
+            }
+          />
+        </div>
+        <div className="filter-content">
+          <FilterButton />
+        </div>
+        <div className="addnew-content">
+          <AddNew />
+        </div>
+      </div>
+      {/* </span> */}
       <DataTable
         value={data}
         filters={filters}
         paginator
         rows={10}
-        className="p-datatable-customers"
+        className="p-datatable-list"
         style={fontStyles}
+        stripedRows
       >
-        <Column field="id" header="ID" sortable />
-        <Column field="client" header="CLIENT" sortable />
-        <Column field="company" header="COMPANY" sortable />
-        <Column field="designation" header="DESIGNATION" sortable />
+        <Column field="id" header="ID" sortable frozen />
+        <Column field="client" header="CLIENT" sortable frozen />
+        <Column field="company" header="COMPANY" sortable frozen />
+        <Column field="designation" header="DESIGNATION" sortable frozen />
         <Column field="contact" header="CONTACT" sortable />
         <Column field="email" header="EMAIL" sortable />
         <Column field="emailSent" header="EMAIL SENT" sortable />
         <Column field="clientReply" header="CLIENT REPLY" sortable />
         <Column field="followUp" header="FOLLOW UP" sortable />
+        {/* <Column
+          field="status"
+          header="STATUS"
+          sortable
+          className="status-content"
+          
+          // body={(rowData) => (
+          //   <Dropdown
+          //     value={rowData.status}
+          //     options={statusOptions}
+          //     onChange={(e) => onStatusChange(rowData, e)}
+          //     placeholder="Inactive"
+          //   />
+          // )}
+        /> */}
         <Column
           field="status"
           header="STATUS"
           sortable
+          className="status-content"
           body={(rowData) => (
-            <Dropdown
-              value={rowData.status}
-              options={statusOptions}
-              onChange={(e) => onStatusChange(rowData, e)}
-              placeholder="Inactive"
-            />
+            <span
+              style={{
+                backgroundColor:
+                  rowData.status === "ACTIVE"
+                    ? "rgba(62, 161, 135, 0.12)"
+                    : "rgba(161, 62, 62, 0.12)",
+                color:
+                  rowData.status === "ACTIVE"
+                    ? "rgba(62, 161, 135, 1)"
+                    : "rgba(161, 62, 62, 1)",
+                padding: "4px 8px",
+                borderRadius: "21px",
+              }}
+            >
+              {rowData.status}
+            </span>
           )}
         />
         <Column field="meetingHeld" header="MEETING HELD" sortable />
@@ -333,30 +404,91 @@ function Table() {
           field="enquiry"
           header="ENQUIRY RECEIVED"
           sortable
+          // body={(rowData) => (
+          //   <Dropdown
+          //     value={rowData.enquiry}
+          //     options={enquiryOptions}
+          //     onChange={(e) => onEnquiryChange(rowData, e)}
+          //     placeholder="No"
+          //   />
+          // )}
           body={(rowData) => (
-            <Dropdown
-              value={rowData.enquiry}
-              options={enquiryOptions}
-              onChange={(e) => onEnquiryChange(rowData, e)}
-              placeholder="No"
-            />
+            <span
+              style={{
+                backgroundColor:
+                  rowData.enquiry === "YES"
+                    ? "rgba(62, 161, 135, 0.12)"
+                    : "rgba(161, 62, 62, 0.12)",
+                color:
+                  rowData.enquiry === "YES"
+                    ? "rgba(62, 161, 135, 1)"
+                    : "rgba(161, 62, 62, 1)",
+                padding: "4px 8px",
+                borderRadius: "21px",
+              }}
+            >
+              {rowData.enquiry}
+            </span>
           )}
         />
         <Column
           field="proposal"
           header="PROPOSAL GIVEN"
           sortable
+          // body={(rowData) => (
+          //   <Dropdown
+          //     value={rowData.proposal}
+          //     options={proposalOptions}
+          //     onChange={(e) => onProposalChange(rowData, e)}
+          //     placeholder="No"
+          //   />
+          // )}
           body={(rowData) => (
-            <Dropdown
-              value={rowData.proposal}
-              options={proposalOptions}
-              onChange={(e) => onProposalChange(rowData, e)}
-              placeholder="No"
-            />
+            <span
+              style={{
+                backgroundColor:
+                  rowData.proposal === "YES"
+                    ? "rgba(62, 161, 135, 0.12)"
+                    : "rgba(161, 62, 62, 0.12)",
+                color:
+                  rowData.proposal === "YES"
+                    ? "rgba(62, 161, 135, 1)"
+                    : "rgba(161, 62, 62, 1)",
+                padding: "4px 8px",
+                borderRadius: "21px",
+              }}
+            >
+              {rowData.proposal}
+            </span>
           )}
         />
-        <Column field="remarks" header="REMARKS" />
-        <Column field="action" header="ACTIONS" />
+        <Column
+          field="remarks"
+          header="REMARKS"
+          body={(rowData) => (
+            <img class="eye-image" src="./assets/eyefinal.png" />
+          )}
+        />
+        <Column
+          field="action"
+          body={(rowData) => (
+            <div style={{ position: "relative" }} className="action">
+              <a onClick={() => handleImageClick(rowData.id)}>
+                <img class="action-img" src="./assets/action.png" />
+              </a>
+              {activeRowId === rowData.id && (
+                <button onClick={handleEditButtonClick} className="edit-button">
+                  {" "}
+                  <img
+                    className="edit-image"
+                    src="./assets/editicon.png"
+                  ></img>{" "}
+                  Edit
+                </button>
+              )}
+            </div>
+          )}
+        />
       </DataTable>
     </div>
   );
