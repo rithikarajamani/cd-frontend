@@ -1,17 +1,31 @@
 import React from "react";
 import "./App.css";
-import Table from "./components/table/table";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { FontProvider } from "./components/fonts/fontContext";
 import Login from "./components/login/login";
+import Table from "./components/table/table";
 
 function App() {
   return (
     <>
       <FontProvider>
-        <div className="App">
+        <Router>
+          <Routes>
+            {/* <Route path="/" element={<Navigate to="/login"></Navigate>} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/table" element={<Table />} />
+          </Routes>
+        </Router>
+
+        {/* <div className="App">
           <Login></Login>
           {/* <Table /> */}
-        </div>
+        {/* </div>  */}
       </FontProvider>
     </>
   );

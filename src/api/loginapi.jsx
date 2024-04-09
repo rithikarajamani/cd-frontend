@@ -8,7 +8,10 @@ async function postApi(user) {
         });
 
         if (response.status === 200) {
+            // alert("login successful")
             console.log(response)
+            console.log(response.data);
+            localStorage.setItem("token",response.data)
             return true;
         } else {
             console.log('Incorrect password');
