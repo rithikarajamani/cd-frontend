@@ -9,6 +9,7 @@ import {
 import { FontProvider } from "./components/fonts/fontContext";
 import Login from "./components/login/login";
 import Table from "./components/table/table";
+import Header from "./components/header/header";
 
 function App() {
   return (
@@ -16,9 +17,9 @@ function App() {
       <FontProvider>
         <Router>
           <Routes>
-            {/* <Route path="/" element={<Navigate to="/login"></Navigate>} /> */}
+            <Route path="/" element={<Navigate to="/login"></Navigate>} />
             <Route path="/login" element={<Login />} />
-            <Route path="/table" element={<Table />} />
+            <Route path="/table" element={<Header />} />
           </Routes>
         </Router>
 

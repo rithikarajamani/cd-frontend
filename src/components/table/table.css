@@ -10,10 +10,14 @@ body{
   padding: 0 10px;
   margin-right: -100px;
   box-sizing: border-box;
+  margin-top: 90px;
+  margin-left: 210px;
+  font-size: small;
+  font-weight: 400;
 }
 
 .client-content {
-  margin-right: 814px;  
+  margin-right: 614px;  
 }
 
 .search{
@@ -36,6 +40,10 @@ body{
     background-size: center; 
     padding-left: 20px; 
     padding-top: 24px;
+    
+}
+.p-datatable-list{
+  margin-left: 210px;
 }
 
 .p-datatable-list .p-datatable-thead > tr > th:nth-child(-n+4),

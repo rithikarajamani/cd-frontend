@@ -12,10 +12,20 @@ import "./table.css";
 import FilterButton from "../filter/filterButton";
 import AddNew from "../addNew/addNew";
 import Clients from "../clients/client";
-
+import RemarksForm from "../remarks/remarksForm";
+import EditForm from "../editForm/editForm";
+import Axios from "axios";
 function Table() {
+  useEffect(() => {
+    document.body.style.overflowX = "hidden";
+    return () => {
+      document.body.style.overflow = "scroll";
+    };
+  }, []);
   const fontStyles = useFont();
   const [activeRowId, setActiveRowId] = useState(null); // State to track active row ID
+  const [remarksVisibleRight,setRemarksVisibleRight]=useState(false);
+  const [editVisibleRight,setEditVisibleRight]=useState(false);
   const [filters, setFilters] = useState({
     global: {
       value: "",
@@ -310,6 +320,12 @@ function Table() {
     event.stopPropagation();
   };
 
+  useEffect(()=>{
+    Axios.get('http://localhost:8090/login/viewClients?status=active')
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err))
+  },[])
+
   return (
     <div style={fontStyles}>
       {/* <h1>Clients</h1> */}
@@ -466,8 +482,10 @@ function Table() {
           field="remarks"
           header="REMARKS"
           body={(rowData) => (
-            <img class="eye-image" src="./assets/eyefinal.png" />
+            <img class="eye-image" src="./assets/eyefinal.png" onClick={()=>setRemarksVisibleRight(true)}/>
+            
           )}
+          
         />
         <Column
           field="action"
@@ -477,7 +495,7 @@ function Table() {
                 <img class="action-img" src="./assets/action.png" />
               </a>
               {activeRowId === rowData.id && (
-                <button onClick={handleEditButtonClick} className="edit-button">
+                <button onClick={()=>setEditVisibleRight(true)} className="edit-button">
                   {" "}
                   <img
                     className="edit-image"
@@ -490,6 +508,8 @@ function Table() {
           )}
         />
       </DataTable>
+      <RemarksForm remarksVisibleRight={remarksVisibleRight} setRemarksVisibleRight={setRemarksVisibleRight}></RemarksForm>
+<EditForm editVisibleRight={editVisibleRight} setEditVisibleRight={setEditVisibleRight} ></EditForm>
     </div>
   );
 }
